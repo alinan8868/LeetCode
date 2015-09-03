@@ -1,0 +1,100 @@
+class Solution {
+public:
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+        int tmp=0,c=0,d=0;
+        ListNode *head;
+        head=l1;
+        if(l1==NULL)return l2;
+        if(l2==NULL)return l1;
+        while(l1->next!=NULL&&l2->next!=NULL)
+        {
+            c=d;
+            tmp=l1->val+l2->val+c;
+            if(tmp>=10)
+            {
+                tmp=tmp-10;
+                d=1;
+            }
+            else d=0;
+            l1->val=tmp;
+            l1=l1->next;
+            l2=l2->next;
+        }
+            if(l1->next==NULL&&l2->next==NULL)//都是最后一个结点
+            {
+                tmp=l1->val+l2->val+d;
+                if(tmp>=10)
+                {
+                    tmp=tmp-10;
+                    l1->val=tmp;
+                    ListNode *p=new ListNode(1);
+                    l1->next=p;
+                    return head;
+                }
+                else 
+                {
+                    l1->val=tmp;
+                    return head;
+                }
+            }
+            else if(l1->next==NULL)
+            {
+                tmp=l1->val+l2->val+d;
+                if(tmp>=10)
+                {
+                    tmp=tmp-10;
+                    l1->val=tmp;
+                    l1->next=l2->next;
+                    l1=l1->next;
+                    while(l1->val==9&&l1->next!=NULL)
+                    {
+                        l1->val=0;
+                        l1=l1->next;
+                    }
+                    if(l1->val!=9)
+                    {l1->val=l1->val+1;}
+                    else
+                    {   l1->val=0;
+                        ListNode *p=new ListNode(1);
+                        l1->next=p;
+                    }
+                    return head;
+                }
+                else
+                {
+                    l1->val=tmp;
+                    l1->next=l2->next;
+                    return head;
+                }
+            }
+            else if(l2->next==NULL)
+            {
+                tmp=l1->val+l2->val+d;
+                if(tmp>=10)
+                {
+                    tmp=tmp-10;
+                    l1->val=tmp;
+                    l1=l1->next;
+                    while(l1->val==9&&l1->next!=NULL)
+                    {
+                        l1->val=0;
+                        l1=l1->next;
+                    }
+                    if(l1->val!=9)
+                    {l1->val=l1->val+1;}
+                    else 
+                    {l1->val=0;
+                        ListNode *p=new ListNode(1);
+                        l1->next=p;
+                    }
+                    return head;
+                }
+                else 
+                {
+                    l1->val=tmp;
+                    return head;
+                }
+            }
+        }
+        
+};
