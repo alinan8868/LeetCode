@@ -1,0 +1,47 @@
+class Solution {
+public:
+    char * findX(char * s,char X)
+    {
+        for(int i=0;s[i]!='\0';i++)
+            if(s[i]==X)	return &(s[i+1]);
+    }
+    int lengthOfLongestSubstring(string s) {
+        if(s.length()==0)return 0;
+        if(s.length()==1)return 1;
+        char *p1=NULL,*p2=NULL;
+        char hash[256];
+        int pos;
+        int length;//字符串长度
+        int res=0,restmp=0;//结果
+        length=s.length();
+        for(int i=0;i<256;i++)hash[i]=1000;
+        p1=&s[0];
+		p2=p1;
+       while(p2!=&s[length-1])
+        {
+            pos=int(*p2)%256;
+          if(*p2!=hash[pos])
+          {
+              hash[pos]=*p2;
+              restmp++;
+              p2++;
+          }
+          else
+          {
+              if(restmp>res)res=restmp;
+              for(int i=0;i<256;i++)
+                hash[i]=1000;
+              p1=findX(p1,*p2);
+              p2=p1;
+              restmp=0;
+          }
+        }
+        if(p2==&s[length-1])
+		{
+			pos=int(*p2)%256;
+		if(*p2!=hash[pos]) restmp++;
+		}
+		if(res<restmp)res=restmp;
+        return res;
+    }
+};
