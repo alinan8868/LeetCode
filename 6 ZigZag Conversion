@@ -1,0 +1,30 @@
+class Solution {
+public:
+ std::string convert(std::string s, int numRows) {
+
+        int strlen = s.length();
+        int jump = 2*numRows -2;
+        if (numRows == 1 || numRows > strlen) return s;
+        int i, j, next;
+        std::string  result;
+        for (i=0; i < numRows; ++i){
+
+            if (i== 0 || i == numRows -1) { //for first and last rows
+                for (j = i; j <  strlen;j += jump){
+                    result.push_back(s[j]);
+                }
+
+            }else{
+                for (j = i; j < strlen; j += jump){
+                    result.push_back(s[j]); //down the columns
+                    next = j + jump - (2*i);
+                    if ( next < strlen){
+                        result.push_back(s[next]); //diagonal lines
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+};
